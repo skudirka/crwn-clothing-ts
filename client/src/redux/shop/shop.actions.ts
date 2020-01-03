@@ -1,25 +1,25 @@
-import ShopActionTypes from './shop.types';
+import {TypeShopAction, IShopCollectionMap, FETCH_COLLECTIONS_START, FETCH_COLLECTIONS_SUCCESS, FETCH_COLLECTIONS_FAILURE} from './shop.types';
 
-import {
+/*import {
   firestore,
   convertCollectionsSnapshotToMap
-} from '../../firebase/firebase.utils';
+} from '../../firebase/firebase.utils';*/
 
-export const fetchCollectionsStart = () => ({
-    type: ShopActionTypes.FETCH_COLLECTIONS_START
+export const fetchCollectionsStart = ():TypeShopAction => ({
+    type: FETCH_COLLECTIONS_START
 });
 
-export const fetchCollectionsSuccess = collectionsMap => ({
-    type: ShopActionTypes.FETCH_COLLECTIONS_SUCCESS,
+export const fetchCollectionsSuccess = (collectionsMap:IShopCollectionMap):TypeShopAction => ({
+    type: FETCH_COLLECTIONS_SUCCESS,
     payload: collectionsMap
 });
 
-export const fetchCollectionsFailure = errorMessage => ({
-    type: ShopActionTypes.FETCH_COLLECTIONS_FAILURE,
+export const fetchCollectionsFailure = (errorMessage:string):TypeShopAction => ({
+    type: FETCH_COLLECTIONS_FAILURE,
     payload: errorMessage
 });
 
-export const fetchCollectionsStartAsync = () => {
+/*export const fetchCollectionsStartAsync = () => {
     return dispatch => {
       const collectionRef = firestore.collection('collections');
       dispatch(fetchCollectionsStart());
@@ -32,5 +32,5 @@ export const fetchCollectionsStartAsync = () => {
         })
         .catch(error => dispatch(fetchCollectionsFailure(error.message)));
     };
-  };
+  };*/
   

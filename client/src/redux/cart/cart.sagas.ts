@@ -1,9 +1,13 @@
 import {all, call, takeLatest, put, select} from 'redux-saga/effects';
 
-import UserActionTypes from '../user/user.types';
+import {SIGN_OUT_SUCCESS, SIGN_IN_SUCCESS, ISignInSuccess} from '../user/user.types';
 import {selectCurrentUser} from '../user/user.selector'
 
-import CartActionTypes from './cart.types';
+import {
+    ADD_ITEM,
+    REMOVE_ITEM,
+    CLEAR_CART
+} from './cart.types';
 import {clearCart, setCartFromDB} from './cart.actions';
 import {selectCartItems} from './cart.selectors';
 
@@ -14,18 +18,18 @@ export function* clearCartOnSignOut() {
 }
 
 export function* onSignOutSuccess() {
-    yield takeLatest(UserActionTypes.SIGN_OUT_SUCCESS, clearCartOnSignOut);
+    yield takeLatest(SIGN_OUT_SUCCESS, clearCartOnSignOut);
 }
 
 
-export function* getUserCartFromDB({ payload: user }) {
+export function* getUserCartFromDB({ payload: user }:ISignInSuccess) {
     const cartRef = yield getUserCartRef(user.id);
     const cartSnapshot = yield cartRef.get();
     yield put(setCartFromDB(cartSnapshot.data().cartItems));
 }
 
 export function* onUserSignIn() {
-    yield takeLatest(UserActionTypes.SIGN_IN_SUCCESS, getUserCartFromDB);
+    yield takeLatest(SIGN_IN_SUCCESS, getUserCartFromDB);
 }
 
 
@@ -46,9 +50,9 @@ export function* updateCartInDB() {
 
 export function* onCartUpdate() {
     yield takeLatest([
-        CartActionTypes.ADD_ITEM,
-        CartActionTypes.REMOVE_ITEM,
-        CartActionTypes.CLEAR_CART
+        ADD_ITEM,
+        REMOVE_ITEM,
+        CLEAR_CART
     ], updateCartInDB);
 }
 

@@ -1,6 +1,7 @@
 import {createSelector} from 'reselect';
+import {IRootState} from '../root-types';
 
-const selectShop = state => state.shop;
+const selectShop = (state:IRootState) => state.shop;
 
 export const selectCollections = createSelector(
     [selectShop],
@@ -12,7 +13,7 @@ export const selectCollectionsForPreview = createSelector(
     collections => collections ? Object.keys(collections).map(key => collections[key]) : []
 );
 
-export const selectCollection = collectionUrlParam => createSelector(
+export const selectCollection = (collectionUrlParam:string) => createSelector(
     [selectCollections],
     collections => collections ? collections[collectionUrlParam] : null
 );

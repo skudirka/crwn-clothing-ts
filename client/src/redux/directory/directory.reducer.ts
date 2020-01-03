@@ -1,4 +1,6 @@
-export const INITIAL_STATE = {
+import {IDirectoryState} from './directory.types';
+
+export const INITIAL_STATE:IDirectoryState = {
     sections: [
         {
           title: 'hats',
@@ -35,7 +37,9 @@ export const INITIAL_STATE = {
     ]
 };
 
-const directoryReducer = (state = INITIAL_STATE, action) => {
+const directoryReducer = (state = INITIAL_STATE, action:{
+  type:string;
+}):IDirectoryState => {
     switch( action.type ){
         default :
             return state;

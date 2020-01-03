@@ -1,6 +1,7 @@
 import {createSelector} from 'reselect';
+import {IRootState} from '../root-types';
 
-const selectCart = state => state.cart;
+const selectCart = (state:IRootState) => state.cart;
 
 export const selectCartItems = createSelector([selectCart], cart => cart.cartItems);
 

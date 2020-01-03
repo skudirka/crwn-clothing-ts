@@ -3,7 +3,7 @@ import {
   fetchCollectionsStart,
   fetchCollectionsSuccess,
   fetchCollectionsFailure,
-  fetchCollectionsStartAsync
+  //fetchCollectionsStartAsync
 } from './shop.actions';
 
 describe('fetchCollectionsStart action', () => {
@@ -38,7 +38,7 @@ describe('fetchCollectionsFailure action', () => {
   });
 });
 
-describe('fetchCollectionsStartAsync action', () => {
+/*describe('fetchCollectionsStartAsync action', () => {
   it('should create the fetchCollectionsStartAsync action', () => {
     const mockActionCreator = fetchCollectionsStartAsync();
     const mockDispatch = jest.fn();
@@ -46,4 +46,4 @@ describe('fetchCollectionsStartAsync action', () => {
 
     expect(mockDispatch).toHaveBeenCalledWith(fetchCollectionsStart());
   });
-});
+});*/

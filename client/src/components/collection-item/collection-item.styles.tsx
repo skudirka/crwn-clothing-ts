@@ -73,10 +73,10 @@ export const PriceContainer = styled.span`
     width: 10%;
 `;
 
-type BackgroundImageProps = {
+interface BackgroundImageProps<T> extends React.HTMLProps<T> {
     imageUrl:string;
 }
-export const BackgroundImage:React.FC = styled.span<BackgroundImageProps>`
+export const BackgroundImage = styled.span<BackgroundImageProps<HTMLSpanElement>>`
     width: 100%;
     height: 95%;
     //background-image: url(${props => props.imageUrl});

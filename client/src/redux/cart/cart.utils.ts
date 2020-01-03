@@ -1,4 +1,6 @@
-export const addItemToCart =  (cartItems, cartItemToAdd) => {
+import {ICartItem} from './cart.types';
+
+export const addItemToCart =  (cartItems:ICartItem[], cartItemToAdd:ICartItem) => {
     const existingCartItem = cartItems.find(cartItem => cartItem.id === cartItemToAdd.id);
     if( existingCartItem ){
         return cartItems.map(cartItem => cartItem.id === cartItemToAdd.id ? {
@@ -10,10 +12,10 @@ export const addItemToCart =  (cartItems, cartItemToAdd) => {
     return [...cartItems, {...cartItemToAdd, quantity: 1}];
 };
 
-export const removeItemFromCart =  (cartItems, cartItemToRemove) => {
+export const removeItemFromCart =  (cartItems:ICartItem[], cartItemToRemove:ICartItem) => {
     const existingCartItem = cartItems.find(cartItem => cartItem.id === cartItemToRemove.id);
     
-    if( existingCartItem.quantity === 1 ){
+    if( existingCartItem && existingCartItem.quantity === 1 ){
         return cartItems.filter(cartItem => cartItem.id !== cartItemToRemove.id)
     }
 
