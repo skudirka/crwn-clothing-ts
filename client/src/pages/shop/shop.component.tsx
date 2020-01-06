@@ -1,6 +1,6 @@
 import React, {useEffect, lazy, Suspense} from 'react';
-import {Route} from 'react-router-dom';
-import {connect} from 'react-redux';
+import {Route, RouteComponentProps} from 'react-router-dom';
+import {connect, ConnectedProps} from 'react-redux';
 
 import {fetchCollectionsStart} from '../../redux/shop/shop.actions';
 
@@ -9,9 +9,28 @@ import Spinner from '../../components/spinner/spinner.component';
 const CollectionsOverviewContainer = lazy(() =>  import('../../components/collections-overview/collections-overview.container'));
 const CollectionPageContainer = lazy(() => import('../collection/collection.container'));
 
-export const ShopPage = ({match, fetchCollectionsStart}) => {
+type TParams = { 
+    id?: string | undefined;
+    collectionId: string;
+};
+
+const mapDispatchToProps = {
+    fetchCollectionsStart
+};
+
+const connector = connect(
+    null,
+    mapDispatchToProps
+);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+type ShopPageProps = PropsFromRedux & RouteComponentProps<TParams>;
+
+export const ShopPage:React.FC<ShopPageProps> = ({match, fetchCollectionsStart}) => {
     
     useEffect(() => {
+        console.log('Fetching collections!')
         fetchCollectionsStart();
     }, [fetchCollectionsStart]);
 
@@ -26,8 +45,4 @@ export const ShopPage = ({match, fetchCollectionsStart}) => {
     );
 };
 
-const mapDispatchToProps = dispatch => ({
-    fetchCollectionsStart: () => dispatch(fetchCollectionsStart())
-});
-
-export default connect(null, mapDispatchToProps)(ShopPage);
+export default connector(ShopPage);

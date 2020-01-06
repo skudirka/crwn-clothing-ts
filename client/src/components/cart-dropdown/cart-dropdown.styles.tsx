@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import CustomButton from '../custom-button/custom-button.component';
+import styledComponentsTS from 'styled-components-ts';
+import CustomButton, {CustomButtonProps} from '../custom-button/custom-button.component';
 
 export const CartDropdownContainer = styled.div`
     position: absolute;
@@ -33,7 +34,10 @@ export const CartItemsContainer = styled.div`
     overflow-y: auto;
 `;
 
-export const CheckoutButton = styled(CustomButton)`
+export type CheckoutButtonProps = CustomButtonProps & {
+    displayName?:string;
+};
+export const CheckoutButton = styledComponentsTS<CheckoutButtonProps>(styled(CustomButton))`
     margin-top: auto;
 `;
 CheckoutButton.displayName = 'CheckoutButton';

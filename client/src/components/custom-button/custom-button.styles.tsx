@@ -1,4 +1,5 @@
 import styled, {css} from 'styled-components';
+import {ComponentPropsWithRef} from 'react';
 
 const buttonStyles = css`
     background-color: black;
@@ -33,11 +34,18 @@ const googleSignInStyles = css`
     }
 `;
 
-const getButtonStyles = props => {
+export interface CustomButtonContainerProps<T> extends ComponentPropsWithRef<'button'> {
+    isGoogleSignIn?:boolean;
+    inverted?:boolean;
+    children: string;
+    onClick?: ()=>void;
+}
+
+const getButtonStyles = (props:CustomButtonContainerProps<HTMLButtonElement>) => {
     return props.isGoogleSignIn ? googleSignInStyles : props.inverted ? invertedButtonStyles : buttonStyles;
 }
 
-export const CustomButtonContainer = styled.button`
+export const CustomButtonContainer = styled.button<CustomButtonContainerProps<HTMLButtonElement>>`
     min-width: 165px;
     width: auto;
     height: 50px;
@@ -55,3 +63,4 @@ export const CustomButtonContainer = styled.button`
 
     ${getButtonStyles}
 `;
+export type CustomButtonContainerType = ReturnType<typeof CustomButtonContainer>

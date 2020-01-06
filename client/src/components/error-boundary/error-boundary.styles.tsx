@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import styledComponentsTS from 'styled-components-ts';
 
 export const ErrorImageOverlay = styled.div`
   height: 60vh;
@@ -9,7 +10,11 @@ export const ErrorImageOverlay = styled.div`
   align-items: center;
 `;
 
-export const ErrorImageContainer = styled.div`
+type ErrorImageContainerProps = React.HTMLProps<HTMLDivElement> & {
+  imageUrl:string;
+  displayName?:string;
+};
+export const ErrorImageContainer = styledComponentsTS<ErrorImageContainerProps>(styled.div)`
   display: inline-block;
   background-image: ${({ imageUrl }) => `url(${imageUrl})`};
   background-size: cover;

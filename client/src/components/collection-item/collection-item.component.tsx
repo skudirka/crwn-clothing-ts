@@ -14,7 +14,7 @@ import {
 } from './collection-item.styles';
 
 const mapDispatchToProps = {
-    addItem: (item:ICartItem) => addItem(item)
+    addItem
 };
 
 const connector = connect(
@@ -26,7 +26,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 type CollectionItemProps = PropsFromRedux & {
     item:ICartItem;
-}
+} & React.HTMLProps<HTMLElement>;
 
 export const CollectionItem:React.FC<CollectionItemProps> = ({item, addItem}) => {
     const {name, price, imageUrl} = item;

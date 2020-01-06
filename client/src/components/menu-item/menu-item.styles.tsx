@@ -1,6 +1,10 @@
 import styled from 'styled-components';
+import styledComponentsTS from 'styled-components-ts';
 
-export const MenuItemContainer = styled.div`
+type MenuItemContainerProps = {
+    size?:string;
+} & React.HTMLProps<HTMLDivElement>;
+export const MenuItemContainer = styledComponentsTS<MenuItemContainerProps>(styled.div)`
     min-width: 30%;
     height: ${({size}) => (size ? '380px' : '240px')};
     flex: 1 1 auto;

@@ -1,11 +1,19 @@
-import React from 'react';
+import React, {ComponentPropsWithRef} from 'react';
 
-import {CustomButtonContainer} from './custom-button.styles';
+import {CustomButtonContainer, CustomButtonContainerProps} from './custom-button.styles';
 
-const CustomButton = ({children, ...props}) => (
-    <CustomButtonContainer {...props}>
-        {children}
-    </CustomButtonContainer>
-)
+export interface ICustomButtonProps extends ComponentPropsWithRef<'button'> {
+    children: string;
+    onClick: ()=>void;
+}
+export type CustomButtonProps = CustomButtonContainerProps<HTMLButtonElement>;
+
+const CustomButton = React.forwardRef<HTMLButtonElement, CustomButtonProps>((props, ref) => {
+    return (
+        <CustomButtonContainer ref={ref} {...props} />
+    );
+});
+
 
 export default CustomButton;
+export type CustomButtonType = ReturnType<typeof CustomButton>

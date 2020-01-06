@@ -2,11 +2,17 @@ import React from 'react';
 import StripeCheckout from 'react-stripe-checkout';
 import axios from 'axios';
 
-const StripeCheckoutButton = ({price}) => {
+type StripeCheckoutButtonProps = {
+    price:number;
+}
+const StripeCheckoutButton:React.FC<StripeCheckoutButtonProps> = ({price}) => {
     const priceForStripe = price * 100;
     const publishableKey = 'pk_test_yV9AZvGkMZiBsZqW6mvaEu3v00NYW5Z6Et';
 
-    const onToken = token => {
+    interface IToken extends Object {
+        id:string;
+    }
+    const onToken = (token:IToken) => {
         axios({
             url: 'payment',
             method: 'post',
@@ -33,7 +39,7 @@ const StripeCheckoutButton = ({price}) => {
             panelLabel="Pay Now" 
             token={onToken} 
             stripeKey={publishableKey}
-            className="stripe"
+            ComponentClass="stripe"
         />
     )
 };

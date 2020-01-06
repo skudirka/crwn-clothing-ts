@@ -2,7 +2,8 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 /// <reference path="firebase/index.d.ts" />
-import {IUser, IShopCollection, IShopCollectionMap} from './data-types';
+import {IUser} from '../redux/user/user.types';
+import {IShopCollection, IShopCollectionMap} from '../redux/shop/shop.types';
 
 export interface IFirestoreData extends firebase.firestore.DocumentData {
     uid?:string;
@@ -19,7 +20,7 @@ const config = {
 };
 
 type DocumentReference<IFirestoreData> = firebase.firestore.DocumentReference<IFirestoreData> | undefined;
-export const createUserProfileDocument = async (userAuth:IUser, additionalData:object):Promise<DocumentReference<IFirestoreData>> => {
+export const createUserProfileDocument = async (userAuth:IUser, additionalData?:object):Promise<DocumentReference<IFirestoreData>> => {
     if( !userAuth ) return;
     
     const userRef = firestore.doc(`users/${userAuth.uid}`);

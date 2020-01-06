@@ -10,6 +10,7 @@ export interface IShopItem extends IFirestoreData {
     name:string;
     imageUrl:string;
     price:number;
+    quantity?:number;
 }
 
 export interface IShopCollection extends IFirestoreData {

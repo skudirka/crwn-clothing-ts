@@ -1,7 +1,7 @@
 export interface IDirectoryItem {
     title: string;
     imageUrl: string;
-    id: number;
+    id?: string | number | undefined;
     linkUrl: string;
     size?: string;
 }

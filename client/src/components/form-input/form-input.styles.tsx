@@ -1,4 +1,6 @@
+import {ComponentPropsWithRef} from 'react';
 import styled, {css} from 'styled-components';
+import styledComponentsTS from 'styled-components-ts';
 
 const subColor = 'grey';
 const mainColor = 'black';
@@ -18,7 +20,10 @@ export const GroupContainer = styled.div`
     }
 `;
 
-export const FormInputContainer = styled.input`
+export interface FormInputContainerProps<T> extends ComponentPropsWithRef<'input'> {
+  displayName?:string;
+}
+export const FormInputContainer = styledComponentsTS<FormInputContainerProps<HTMLInputElement>>(styled.input)`
     background: none;
     background-color: white;
     color: ${subColor};
@@ -40,6 +45,8 @@ export const FormInputContainer = styled.input`
     }
 `;
 FormInputContainer.displayName = 'FormInputContainer';
+
+export type FormInputContainerType = ReturnType<typeof FormInputContainer>
 
 export const FormInputLabel = styled.label`
     color: ${subColor};

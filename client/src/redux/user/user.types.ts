@@ -25,7 +25,7 @@ export interface IUser extends firebase.User {
 // State type
 export interface IUserState {
     currentUser?: (IUser | null);
-    error?:(string| null);
+    error?:(string | null);
 }
 
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import {connect, ConnectedProps} from 'react-redux';
 import {createStructuredSelector} from 'reselect';
 
 //import './header.styles.scss';
@@ -11,8 +11,31 @@ import CartDropdown from '../cart-dropdown/cart-dropdown.component';
 import {selectCurrentUser} from '../../redux/user/user.selector';
 
 import {signOutStart} from '../../redux/user/user.actions';
+import {IRootState} from '../../redux/root-types';
+import {IUser} from '../../redux/user/user.types';
 
-export const Header = ({currentUser, signOutStart}) => (
+interface mapStateToPropsInterface {
+    currentUser:IUser | null | undefined;
+}
+
+const mapStateToProps = createStructuredSelector<IRootState, mapStateToPropsInterface>({
+    currentUser: selectCurrentUser
+});
+
+const mapDispatchToProps = {
+    signOutStart
+};
+
+const connector = connect(
+    mapStateToProps,
+    mapDispatchToProps
+);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+type HeaderProps = PropsFromRedux & {}
+
+export const Header:React.FC<HeaderProps> = ({currentUser, signOutStart}) => (
     <HeaderContainer>
         <LogoContainer to="/">
             <Logo className="logo" />
@@ -22,7 +45,7 @@ export const Header = ({currentUser, signOutStart}) => (
             <OptionLink to="/shop">CONTACT</OptionLink>
             {
                 currentUser ? 
-                    <OptionLink as="div" className="sign-out" onClick={signOutStart}>SIGN OUT</OptionLink>
+                    <OptionLink to="#" as="div" className="sign-out" onClick={signOutStart}>SIGN OUT</OptionLink>
                 : 
                 <OptionLink to="/signin" className="sign-in">SIGN IN</OptionLink>
             }
@@ -32,12 +55,4 @@ export const Header = ({currentUser, signOutStart}) => (
     </HeaderContainer>
 );
 
-const mapStateToProps = state => createStructuredSelector({
-    currentUser: selectCurrentUser
-});
-
-const mapDispatchToProps = dispatch => ({
-    signOutStart: () => dispatch(signOutStart())
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connector(Header);

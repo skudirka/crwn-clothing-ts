@@ -1,14 +1,15 @@
-import {createSelector} from 'reselect';
+import {createSelector, Selector} from 'reselect';
 import {IRootState} from '../root-types';
+import {IShopState, IShopCollection} from './shop.types';
 
-const selectShop = (state:IRootState) => state.shop;
+const selectShop:Selector<IRootState, IShopState> = (state:IRootState) => state.shop;
 
 export const selectCollections = createSelector(
     [selectShop],
     shop => shop.collections
 );
 
-export const selectCollectionsForPreview = createSelector(
+export const selectCollectionsForPreview:Selector<IRootState, IShopCollection[]> = createSelector(
     [selectCollections],
     collections => collections ? Object.keys(collections).map(key => collections[key]) : []
 );

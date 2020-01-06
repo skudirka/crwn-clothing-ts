@@ -16,8 +16,8 @@ import {
 
 
 const mapDispatchToProps = {
-    addItem: (item:ICartItem) => (addItem(item)),
-    removeItem: (item:ICartItem) => (removeItem(item)),
+    addItem,
+    removeItem,
     clearItem: (item:ICartItem) => (clearItemFromCart(item))
 };
 

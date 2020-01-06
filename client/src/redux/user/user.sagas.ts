@@ -21,7 +21,7 @@ import {auth, googleProvider, createUserProfileDocument, getCurrentUser} from '.
 
 export function* getSnapshotFromUserAuth(userAuth:IUser, additionalData?:object) {
     try {
-        const userRef = yield call(createUserProfileDocument, userAuth, additionalData);
+        const userRef = yield call({context: null, fn: createUserProfileDocument}, userAuth, additionalData);
         const userSnapshot = yield userRef.get();
         yield put(
             signInSuccess({ id: userSnapshot.id, ...userSnapshot.data() })

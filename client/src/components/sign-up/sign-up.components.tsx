@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {connect} from 'react-redux';
+import React, {useState, FormEvent} from 'react';
+import {connect, ConnectedProps} from 'react-redux';
 
 import {SignUpContainer, SignUpTitleContainer} from './sign-up.styles';
 
@@ -7,18 +7,36 @@ import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 
 import {signUpStart} from '../../redux/user/user.actions';
+import {TypeSignUpStartPayload} from '../../redux/user/user.types';
 
-export const SignUp = ({signUpStart}) => {
+type TypeSignUpFields = TypeSignUpStartPayload & {
+    confirmPassword:string;
+}
+
+const mapDispatchToProps = {
+    signUpStart
+};
+
+const connector = connect(
+    null,
+    mapDispatchToProps
+);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+type SignUpProps = PropsFromRedux & {};
+
+export const SignUp:React.FC<SignUpProps> = ({signUpStart}) => {
     const [userCredentials, setCredentials] = useState({
         displayName: '',
         email: '',
         password: '',
         confirmPassword: ''
-    });
+    } as TypeSignUpFields);
 
     const {displayName, email, password, confirmPassword} = userCredentials;
 
-    const handleSubmit = async e => {
+    const handleSubmit = async (e:FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         if(password !== confirmPassword){
@@ -29,8 +47,8 @@ export const SignUp = ({signUpStart}) => {
         signUpStart({email, displayName, password});
     };
 
-    const handleChange = e => {
-        const {name, value} = e.target;
+    const handleChange = (e:FormEvent<HTMLInputElement>) => {
+        const {name, value} = e.target as HTMLInputElement;
 
         setCredentials({
             ...userCredentials,
@@ -53,8 +71,4 @@ export const SignUp = ({signUpStart}) => {
     )
 };
 
-const mapDispatchToProps = dispatch => ({
-    signUpStart: userCredentials => dispatch(signUpStart(userCredentials))
-});
-
-export default connect(null, mapDispatchToProps)(SignUp);
+export default connector(SignUp);

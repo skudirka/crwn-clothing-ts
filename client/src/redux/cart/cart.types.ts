@@ -9,9 +9,10 @@ export const CLEAR_CART = 'CLEAR_CART';
 export const GET_CART_FROM_FIREBASE = 'GET_CART_FROM_FIREBASE';
 
 // Data types
-export interface ICartItem extends IShopItem {
+/*export interface ICartItem extends IShopItem {
     quantity:number;
-}
+}*/
+export interface ICartItem extends IShopItem {};
 
 export interface ICart extends IFirestoreData {
     userId:string;

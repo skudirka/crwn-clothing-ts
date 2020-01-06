@@ -2,11 +2,11 @@ import React from 'react';
 import {CollectionPreviewContainer, TitleContainer, PreviewContainer} from './collection-preview.styles';
 
 import CollectionItem from '../collection-item/collection-item.component';
-import {ICartItem} from '../../redux/cart/cart.types';
+import {IShopItem} from '../../redux/shop/shop.types';
 
 type CollectionPreviewProps = {
     title:string;
-    items:ICartItem[];
+    items:IShopItem[];
 }
 
 const CollectionPreview:React.FC<CollectionPreviewProps> = ({title, items}) => (

@@ -1,13 +1,38 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import {connect, ConnectedProps} from 'react-redux';
 
 import CollectionItem from '../../components/collection-item/collection-item.component';
 
 import {selectCollection} from '../../redux/shop/shop.selectors';
+import {IShopCollection} from '../../redux/shop/shop.types';
+import {IRootState} from '../../redux/root-types';
+import { RouteComponentProps } from 'react-router-dom';
 
 import {CollectionPageContainer, CollectionTitle, CollectionItemsContainer} from './collection.styles';
 
-export const CollectionPage = ({collection}) => {
+type TParams = { 
+    id?: string | undefined;
+    collectionId: string;
+};
+type mapStateToPropsType = RouteComponentProps<TParams> & {
+    collection: IShopCollection;
+}
+const mapStateToProps = (state:IRootState, ownProps:mapStateToPropsType) => ({
+    collection: selectCollection(ownProps.match.params.collectionId)(state)
+})
+
+const connector = connect(
+    mapStateToProps
+);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+type CollectionPageProps = PropsFromRedux & {};
+
+export const CollectionPage:React.FC<CollectionPageProps> = ({collection}) => {
+    if(!collection){
+        return null;
+    }
     const {title, items} = collection;
     return (
         <CollectionPageContainer className="collection-page">
@@ -23,8 +48,4 @@ export const CollectionPage = ({collection}) => {
     )
 };
 
-const mapStateToProps = (state, ownProps) => ({
-    collection: selectCollection(ownProps.match.params.collectionId)(state)
-})
-
-export default connect(mapStateToProps)(React.memo(CollectionPage));
+export default connector(React.memo(CollectionPage));

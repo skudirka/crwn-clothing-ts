@@ -1,14 +1,31 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import {connect, ConnectedProps} from 'react-redux';
 import {createStructuredSelector} from 'reselect';
 
 import {selectCollectionsForPreview} from '../../redux/shop/shop.selectors';
+import {IShopCollection} from '../../redux/shop/shop.types';
 
 import CollectionPreview from '../collection-preview/collection-preview.component';
 
 import {CollectionsOverviewContainer} from './collections-overview.styles';
+import {IRootState} from '../../redux/root-types';
 
-export const CollectionsOverview = ({collections}) => (
+interface mapStateToPropsInterface {
+    collections:IShopCollection[];
+}
+const mapStateToProps = createStructuredSelector<IRootState, mapStateToPropsInterface>({
+    collections: selectCollectionsForPreview
+});
+
+const connector = connect(
+    mapStateToProps
+);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+type CollectionsOverviewProps = PropsFromRedux & React.HTMLProps<HTMLElement>;
+
+export const CollectionsOverview:React.FC<CollectionsOverviewProps> = ({collections}) => (
     <CollectionsOverviewContainer className="collections-overview">
         {
             collections.map(({id, ...otherCollectionProps}) => (
@@ -18,8 +35,4 @@ export const CollectionsOverview = ({collections}) => (
     </CollectionsOverviewContainer>
 );
 
-const mapToStateProps = createStructuredSelector({
-    collections: selectCollectionsForPreview
-});
-
-export default connect(mapToStateProps)(React.memo(CollectionsOverview));
+export default connector(React.memo(CollectionsOverview));

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import CustomButton from '../custom-button/custom-button.component';
+import styledComponentsTS from 'styled-components-ts';
+import CustomButton, {CustomButtonProps} from '../custom-button/custom-button.component';
 import React from 'react';
 
 export const CollectionItemContainer = styled.div`
@@ -40,7 +41,10 @@ export const CollectionItemContainer = styled.div`
     }
 `;
 
-export const AddButton = styled(CustomButton)`
+export type AddButtonProps = CustomButtonProps & {
+    displayName?:string;
+};
+export const AddButton = styledComponentsTS<AddButtonProps>(styled(CustomButton))`
     width: 80%;
     opacity: 0.7;
     position: absolute;

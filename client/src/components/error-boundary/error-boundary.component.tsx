@@ -1,23 +1,23 @@
-import React from 'react';
+import React, { ErrorInfo } from 'react';
 
 import {ErrorImageOverlay, ErrorImageContainer, ErrorImageText} from './error-boundary.styles';
 
-class ErrorBoundary extends React.Component {
+type Props = {};
+type State = {
+    hasErrored:boolean;
+}
+class ErrorBoundary extends React.Component<Props, State> {
    
-    constructor() {
-        super();
-
-        this.state = {
-            hasErrored: false
-        }
+    state:State = {
+        hasErrored: false
     }
     
-    static getDerivedStateFromError(error){
+    static getDerivedStateFromError(error:Error){
         // process the error
         return { hasErrored: true };
     }
     
-    componentDidCatch(error, info) {
+    componentDidCatch(error:Error, info:ErrorInfo) {
         console.log(error);
     }
 

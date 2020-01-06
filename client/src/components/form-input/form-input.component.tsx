@@ -1,18 +1,26 @@
-import React from 'react';
+import React, {FormEvent} from 'react';
 
-import {GroupContainer, FormInputContainer, FormInputLabel} from './form-input.styles';
+import {GroupContainer, FormInputContainer, FormInputLabel, FormInputContainerProps} from './form-input.styles';
 
-const FormInput = ({handleChange, label, ...otherProps}) => (
-    <GroupContainer className="group">
-        <FormInputContainer className="form-input" onChange={handleChange} {...otherProps} />
-        {
-            label ? (
-                <FormInputLabel className={'form-input-label ' + (otherProps.value.length ? 'shrink' : '')}>
-                    {label}
-                </FormInputLabel>
-            ) : null
-        }
-    </GroupContainer>
-)
+export interface IFormInputProps extends FormInputContainerProps<HTMLInputElement> {
+    handleChange?:(event: FormEvent<HTMLInputElement>) => void;
+    label?:string;
+}
+export type FormInputProps = IFormInputProps;
+
+const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(({handleChange, label, ...otherProps}, ref) => {
+    return (
+        <GroupContainer className="group">
+            <FormInputContainer className="form-input" ref={ref} onChange={handleChange} {...otherProps} />
+            {
+                label ? (
+                    <FormInputLabel className={'form-input-label ' + ((otherProps.value as string).length ? 'shrink' : '')}>
+                        {label}
+                    </FormInputLabel>
+                ) : null
+            }
+        </GroupContainer>
+    );
+});
 
 export default FormInput;

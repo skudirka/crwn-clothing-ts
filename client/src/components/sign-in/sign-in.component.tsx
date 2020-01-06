@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {connect} from 'react-redux';
+import React, {useState, FormEvent} from 'react';
+import {connect, ConnectedProps} from 'react-redux';
 
 import {SignInContainer, SignInTitleContainer, SignInButtonsContainer} from './sign-in.styles';
 
@@ -8,7 +8,21 @@ import CustomButton from '../custom-button/custom-button.component';
 
 import {googleSignInStart, emailSignInStart} from '../../redux/user/user.actions';
 
-export const SignIn = ({ emailSignInStart, googleSignInStart }) => {
+const mapDispatchToProps = {
+    googleSignInStart,
+    emailSignInStart: (email:string, password:string) => emailSignInStart({email, password})
+};
+
+const connector = connect(
+    null,
+    mapDispatchToProps
+);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+type SignInProps = PropsFromRedux & {};
+
+export const SignIn:React.FC<SignInProps> = ({ emailSignInStart, googleSignInStart }) => {
     const [userCredentials, setCredentials] = useState({
         email: '',
         password: ''
@@ -16,14 +30,14 @@ export const SignIn = ({ emailSignInStart, googleSignInStart }) => {
 
     const {email, password} = userCredentials;
 
-    const handleSubmit = async e => {
+    const handleSubmit = async (e:FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         
         emailSignInStart(email, password);
     };
 
-    const handleChange = e => {
-        const { value, name } = e.target;
+    const handleChange = (e:FormEvent<HTMLInputElement>) => {
+        const { value, name } = e.target as HTMLInputElement;
 
         setCredentials({
             ...userCredentials,
@@ -48,9 +62,4 @@ export const SignIn = ({ emailSignInStart, googleSignInStart }) => {
     )
 }
 
-const mapDispatchToProps = dispatch => ({
-    googleSignInStart: () => dispatch(googleSignInStart()),
-    emailSignInStart: (email, password) => dispatch(emailSignInStart({email, password}))
-})
-
-export default connect(null, mapDispatchToProps)(SignIn);
+export default connector(SignIn);

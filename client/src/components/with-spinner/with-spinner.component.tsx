@@ -1,8 +1,13 @@
-import React from 'react';
+import React, {ReactElement, JSXElementConstructor} from 'react';
 
 import Spinner from '../spinner/spinner.component';
 
-const WithSpinner = WrappedComponent => ({isLoading, ...otherProps}) => {
+export type WithSpinnerProps = {
+    isLoading:boolean;
+} & React.HTMLProps<ReactElement>;
+
+const WithSpinner = (WrappedComponent:JSXElementConstructor<any>) => ({isLoading, ...otherProps}:WithSpinnerProps) => {
+    
     return isLoading ? (
         <Spinner className="spinner" />
     ) : (
